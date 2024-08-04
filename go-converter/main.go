@@ -1,12 +1,28 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-const usdEur = 0.92
 const usdRub = 86.11
-const eurRub = usdRub / usdEur
 
 func main() {
+	exchangeCurs := map[string]map[string]float64{
+		"usd": {
+			"eur": 0.92,
+			"rub": 86.11,
+		},
+		"rub": {
+			"usd": 0.01,
+			"eur": 0.01,
+		},
+		"eur": {
+			"usd": 1.05,
+			"rub": 0.01,
+		},
+	}
+
 	var value int
 	var targetCurency, currentCurency string
 
@@ -45,7 +61,7 @@ func main() {
 		fmt.Println("Введено не подходящее значение")
 	}
 
-	fmt.Printf("Вы получите: %.2f", calculateConvertation(value, targetCurency, currentCurency))
+	fmt.Printf("Вы получите: %.2f", calculateConvertation(value, targetCurency, currentCurency, exchangeCurs))
 
 }
 
@@ -60,22 +76,17 @@ func getUserInputCurency(label string) string {
 	var val string
 	fmt.Print(label)
 	fmt.Scan(&val)
-	return val
+	return strings.ToLower(val)
 }
 
-func calculateConvertation(value int, targetCurency, currentCurency string) float64 {
-	if targetCurency == "usd" && currentCurency == "rub" {
-		return float64(value) / usdRub
-	} else if targetCurency == "eur" && currentCurency == "rub" {
-		return float64(value) / eurRub
-	} else if targetCurency == "rub" && currentCurency == "usd" {
-		return float64(value) * eurRub
-	} else if targetCurency == "rub" && currentCurency == "eur" {
-		return float64(value) * eurRub
-	} else if targetCurency == "usd" && currentCurency == "eur" {
-		return float64(value) / usdEur
-	}
-	return float64(value) * usdEur
+func calculateConvertation(
+	value int,
+	targetCurency string,
+	currentCurency string,
+	curs map[string]map[string]float64,
+) float64 {
+
+	return float64(value) * curs[currentCurency][targetCurency]
 }
 
 func typeOfObject(variable interface{}) string {
