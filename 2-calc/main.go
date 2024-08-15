@@ -36,8 +36,8 @@ func main() {
 			nums[i] = temp
 
 		} else {
-			continue
 
+			continue
 		}
 
 	}

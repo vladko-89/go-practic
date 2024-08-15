@@ -6,6 +6,7 @@ import (
 )
 
 
+
 func main() {
 	exchangeCurs := map[string]map[string]float64{
 		"usd": {
@@ -62,6 +63,7 @@ func main() {
 
 	fmt.Printf("Вы получите: %.2f", calculateConvertation(&value, &targetCurency, &currentCurency, exchangeCurs))
 
+
 }
 
 func getUserInputCount() int {
@@ -79,6 +81,7 @@ func getUserInputCurency(label string) string {
 }
 
 func calculateConvertation(
+
 	value *int,
 	targetCurency *string,
 	currentCurency *string,
@@ -86,6 +89,7 @@ func calculateConvertation(
 ) float64 {
 
 	return float64(*value) * curs[*currentCurency][*targetCurency]
+
 }
 
 func typeOfObject(variable interface{}) string {
