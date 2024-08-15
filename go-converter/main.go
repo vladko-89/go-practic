@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-const usdRub = 86.11
+
 
 func main() {
 	exchangeCurs := map[string]map[string]float64{
@@ -61,7 +61,8 @@ func main() {
 		fmt.Println("Введено не подходящее значение")
 	}
 
-	fmt.Printf("Вы получите: %.2f", calculateConvertation(value, targetCurency, currentCurency, exchangeCurs))
+	fmt.Printf("Вы получите: %.2f", calculateConvertation(&value, &targetCurency, &currentCurency, exchangeCurs))
+
 
 }
 
@@ -80,13 +81,15 @@ func getUserInputCurency(label string) string {
 }
 
 func calculateConvertation(
-	value int,
-	targetCurency string,
-	currentCurency string,
+
+	value *int,
+	targetCurency *string,
+	currentCurency *string,
 	curs map[string]map[string]float64,
 ) float64 {
 
-	return float64(value) * curs[currentCurency][targetCurency]
+	return float64(*value) * curs[*currentCurency][*targetCurency]
+
 }
 
 func typeOfObject(variable interface{}) string {
